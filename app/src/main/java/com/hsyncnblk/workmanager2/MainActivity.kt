@@ -7,6 +7,7 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.hsyncnblk.workmanager2.databinding.ActivityMainBinding
 import java.util.concurrent.TimeUnit
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             buttonYap.setOnClickListener {
 
-                val calismaKosulu = Constraints.Builder()
+               /* val calismaKosulu = Constraints.Builder()
                     .setRequiredNetworkType(NetworkType.CONNECTED).build()
 
                 val istek = OneTimeWorkRequestBuilder<MyWorker>()
@@ -31,6 +32,13 @@ class MainActivity : AppCompatActivity() {
                     .build()
 
                 WorkManager.getInstance(this@MainActivity).enqueue(istek)
+                */
+
+                val istek = PeriodicWorkRequestBuilder<MyWorkerBildirim>(15,TimeUnit.MINUTES)
+                    .setInitialDelay(10,TimeUnit.SECONDS)
+
+                    .build()
+
 
                 WorkManager.getInstance(this@MainActivity).getWorkInfoByIdLiveData(istek.id)
                     .observe(this@MainActivity){
